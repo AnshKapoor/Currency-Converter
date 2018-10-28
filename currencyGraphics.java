@@ -20,7 +20,13 @@ public class currencyGraphics extends JFrame implements ActionListener {
 String[] currencies = {"IND","CAD","AUS","EURO","KD"};
 	private JPanel contentPane;
 	private JTextField txtTo;
-
+	private JTextField textField;
+	private JTextField textField_1;
+	public JComboBox comboboxmain;
+	public JComboBox combobox2;
+	public JSpinner spin;
+	public JButton buttonconvert;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -50,10 +56,13 @@ String[] currencies = {"IND","CAD","AUS","EURO","KD"};
 		
 		JComboBox comboBox = new JComboBox(currencies);
 		comboBox.setBounds(110, 71, 117, 20);
+		comboBox.setSelectedIndex(0);
 		contentPane.add(comboBox);
+		comboboxmain = comboBox;
 		
 		JSpinner spinner = new JSpinner();
 		spinner.setBounds(26, 71, 74, 20);
+		spin = spinner;
 		contentPane.add(spinner);
 		
 		txtTo = new JTextField();
@@ -64,29 +73,53 @@ String[] currencies = {"IND","CAD","AUS","EURO","KD"};
 		txtTo.setColumns(10);
 		
 		JComboBox comboBox_1 = new JComboBox(currencies);
+		comboBox_1.setSelectedIndex(1);
 		comboBox_1.setBounds(296, 71, 104, 20);
 		contentPane.add(comboBox_1);
 		JButton btnConvert = new JButton("Convert");
 		btnConvert.setBounds(146, 131, 104, 23);
 		contentPane.add(btnConvert);
-		
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(179, 180, 6, 20);
-		contentPane.add(textPane);
+		buttonconvert = btnConvert;
+		combobox2 = comboBox_1;
 		
 		JLabel lblCurrencyConverter = new JLabel("Currency Converter");
-		lblCurrencyConverter.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblCurrencyConverter.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCurrencyConverter.setBounds(110, 11, 214, 29);
 		contentPane.add(lblCurrencyConverter);
 		
-		comboBox.addActionListener(this);
-		comboBox_1.addActionListener(this);
+		textField_1 = new JTextField();
+		textField_1.setBounds(159, 189, 86, 20);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
+		
+	
+		
+		//comboBox.addActionListener(this);
+		//comboBox_1.addActionListener(this);
 		btnConvert.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg) {
 		// TODO Auto-generated method stub
+		int a = comboboxmain.getSelectedIndex();
+		int b = combobox2.getSelectedIndex();
+		if(a==b)
+		textField_1.setText(String.valueOf(spin.getValue()));
+		   if((JButton)arg.getSource()==buttonconvert) {
+			int var;
+			var = (int) spin.getValue();
+			currency c1 = currency.Identify(a);
+			currency c2 = currency.Identify(b);
+			double sourceip = var;
+			double answer = currency.convert(sourceip, c1, c2);
+			String toprint = String.format("%.2f", answer);
+			textField_1.setText(toprint);
+		    
 		
-	}
+		//textField_1.setText("Other");
+	//textField_1.setText(String.valueOf(a));
+		   }	
+	
+}
 }
